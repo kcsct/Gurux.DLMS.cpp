@@ -114,7 +114,7 @@ CGXBigInteger& CGXBigInteger::operator=(const CGXBigInteger& value)
 
 CGXBigInteger::~CGXBigInteger()
 {
-    delete m_Data;
+    free(m_Data);
     m_Data = NULL;
 }
 
