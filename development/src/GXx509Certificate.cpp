@@ -242,21 +242,6 @@ int CGXx509Certificate::UpdateSerialNumber(CGXAsn1Sequence* reqInfo)
                 m_SerialNumber = CGXBigInteger(value->GetValue().ToInteger());
             }
         }
-        else if (CGXAsn1Variant* value = dynamic_cast<CGXAsn1Variant*>(reqInfo->GetValues()->at(1)))
-        {
-            CGXDLMSVariant& variant = value->GetValue();
-            CGXByteBuffer bb;
-            switch (variant.vt)
-            {
-            case DLMS_DATA_TYPE_INT8:
-                bb.Set(&variant.cVal, 1);
-                break;
-            default:
-                bb.Set(value->GetValue().byteArr, variant.GetSize());
-                break;
-            }
-            m_SerialNumber = CGXBigInteger(bb);
-        }
         else
         {
             return DLMS_ERROR_CODE_INVALID_PARAMETER;
