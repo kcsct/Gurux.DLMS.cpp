@@ -746,6 +746,11 @@ int CGXPkcs10::GetCertificate(
             }
         }
     }
+#if defined(_WIN32) || defined(_WIN64)
+    closesocket(conn);
+#else
+    close(conn);
+#endif
     return ret;
 }
 

@@ -167,6 +167,8 @@ int CGXPkcs8::GetEncoded(CGXByteBuffer& encoded)
         d->GetValues()->push_back(new CGXAsn1Variant(bb));
         ret = CGXAsn1Converter::ToByteArray(d, encoded);
     }
+    delete d2; 
+    delete d;
     return ret;
 
 }

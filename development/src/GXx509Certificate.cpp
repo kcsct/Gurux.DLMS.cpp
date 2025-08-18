@@ -233,8 +233,13 @@ int CGXx509Certificate::UpdateSerialNumber(CGXAsn1Sequence* reqInfo)
         {
             if (value->GetValue().vt == DLMS_DATA_TYPE_OCTET_STRING)
             {
+                int size = value->GetValue().GetSize();
+                if (size < 0)
+                {
+                    return DLMS_ERROR_CODE_INVALID_PARAMETER;
+                }
                 CGXByteBuffer bb;
-                bb.Set(value->GetValue().byteArr, value->GetValue().GetSize());
+                bb.Set(value->GetValue().byteArr, size);
                 m_SerialNumber = CGXBigInteger(bb);
             }
             else

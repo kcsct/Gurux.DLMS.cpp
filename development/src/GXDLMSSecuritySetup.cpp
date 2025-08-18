@@ -677,6 +677,7 @@ int CGXDLMSSecuritySetup::SetValue(CGXDLMSSettings& settings, CGXDLMSValueEventA
                 CGXAsn1Base* value = new CGXAsn1Base();
                 if ((ret = CGXAsn1Converter::FromByteArray(bb, value)) != 0)
                 {
+                    delete info;
                     delete value;
                     return ret;
                 }
@@ -697,6 +698,7 @@ int CGXDLMSSecuritySetup::SetValue(CGXDLMSSettings& settings, CGXDLMSValueEventA
                 }
                 else
                 {
+                    delete info;
                     delete value;
                     return ret;
                 }
