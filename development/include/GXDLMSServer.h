@@ -121,7 +121,7 @@ private:
     *            code
     * @return
     */
-    void GenerateConfirmedServiceError(
+    static void GenerateConfirmedServiceError(
         DLMS_CONFIRMED_SERVICE_ERROR service,
         DLMS_SERVICE_ERROR type,
         unsigned char code, CGXByteBuffer& data);

@@ -497,7 +497,7 @@ int CGXDLMSLNCommandHandler::HandleGetRequest(
     if (xml == NULL && (settings.GetConnected() & DLMS_CONNECTION_STATE_DLMS) == 0 &&
         cipheredCommand == DLMS_COMMAND_NONE)
     {
-        server->GenerateConfirmedServiceError(DLMS_CONFIRMED_SERVICE_ERROR_INITIATE_ERROR,
+        CGXDLMSServer::GenerateConfirmedServiceError(DLMS_CONFIRMED_SERVICE_ERROR_INITIATE_ERROR,
             DLMS_SERVICE_ERROR_SERVICE, DLMS_SERVICE_UNSUPPORTED,
             *replyData);
         return 0;
@@ -1020,7 +1020,7 @@ int CGXDLMSLNCommandHandler::HandleSetRequest(
     // Return error if connection is not established.
     if (xml == NULL && (settings.GetConnected() & DLMS_CONNECTION_STATE_DLMS) == 0)
     {
-        server->GenerateConfirmedServiceError(DLMS_CONFIRMED_SERVICE_ERROR_INITIATE_ERROR,
+        CGXDLMSServer::GenerateConfirmedServiceError(DLMS_CONFIRMED_SERVICE_ERROR_INITIATE_ERROR,
             DLMS_SERVICE_ERROR_SERVICE, DLMS_SERVICE_UNSUPPORTED,
             *replyData);
         return 0;
@@ -1422,7 +1422,7 @@ int CGXDLMSLNCommandHandler::HandleAccessRequest(
     //Return error if connection is not established.
     if (xml == NULL && settings.GetConnected() == DLMS_CONNECTION_STATE_NONE)
     {
-        server->GenerateConfirmedServiceError(DLMS_CONFIRMED_SERVICE_ERROR_INITIATE_ERROR,
+        CGXDLMSServer::GenerateConfirmedServiceError(DLMS_CONFIRMED_SERVICE_ERROR_INITIATE_ERROR,
             DLMS_SERVICE_ERROR_SERVICE, DLMS_SERVICE_UNSUPPORTED,
             *replyData);
         return 0;
@@ -1583,6 +1583,11 @@ int CGXDLMSLNCommandHandler::HandleAccessRequest(
         }
         if (xml == NULL)
         {
+            if (server == NULL)
+            {
+                //The server should always be set, but this is just a safety check.
+                return DLMS_ERROR_CODE_INVALID_PARAMETER;
+            }
             CGXDLMSAccessItem& it = list.at(pos);
             results.SetUInt8(it.GetCommand());
             if (it.GetTarget() == NULL)

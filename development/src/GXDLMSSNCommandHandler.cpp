@@ -161,7 +161,7 @@ int CGXDLMSSNCommandHandler::HandleWriteRequest(
     // Return error if connection is not established.
     if (xml == NULL && (settings.GetConnected() & DLMS_CONNECTION_STATE_DLMS) == 0)
     {
-        server->GenerateConfirmedServiceError(DLMS_CONFIRMED_SERVICE_ERROR_INITIATE_ERROR,
+        CGXDLMSServer::GenerateConfirmedServiceError(DLMS_CONFIRMED_SERVICE_ERROR_INITIATE_ERROR,
             DLMS_SERVICE_ERROR_SERVICE,
             DLMS_SERVICE_UNSUPPORTED, *replyData);
         return 0;
@@ -577,7 +577,7 @@ int CGXDLMSSNCommandHandler::HandleRead(
     if (settings.GetConnected() == DLMS_CONNECTION_STATE_NONE &&
         (!e->IsAction() || e->GetTarget()->GetShortName() != 0xFA00 || e->GetIndex() != 8))
     {
-        server->GenerateConfirmedServiceError(
+        CGXDLMSServer::GenerateConfirmedServiceError(
             DLMS_CONFIRMED_SERVICE_ERROR_INITIATE_ERROR, DLMS_SERVICE_ERROR_SERVICE,
             DLMS_SERVICE_UNSUPPORTED, *replyData);
         return 0;
