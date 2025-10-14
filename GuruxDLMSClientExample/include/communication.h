@@ -72,6 +72,8 @@ class CGXCommunication
 {
     GX_TRACE_LEVEL m_Trace;
     CGXDLMSSecureClient* m_Parser;
+protected:
+    virtual int close(int fd) {return ::close(fd);}
     int m_socket;
     static const unsigned int RECEIVE_BUFFER_SIZE = 200;
     unsigned char   m_Receivebuff[RECEIVE_BUFFER_SIZE];
@@ -84,7 +86,7 @@ class CGXCommunication
     int             m_hComPort;
 #endif
     uint16_t m_WaitTime;
-    int Read(unsigned char eop, CGXByteBuffer& reply, uint16_t waitTime = 0);
+    virtual int Read(unsigned char eop, CGXByteBuffer& reply, uint16_t waitTime = 0);
     /// Read Invocation counter (frame counter) from the meter and update it.
     int UpdateFrameCounter();
     int InitializeOpticalHead();
@@ -133,7 +135,7 @@ public:
     }
 
     //Send data to the media.
-    int SendData(CGXByteBuffer& data);
+    virtual int SendData(CGXByteBuffer& data);
     //Read data from the media.
     int ReadData(CGXByteBuffer& reply, std::string& str);
 
