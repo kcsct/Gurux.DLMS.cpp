@@ -359,3 +359,16 @@ set_target_properties(guruxdlms PROPERTIES
     SOVERSION 1
 )
 
+# Also build the client example library for CGXCommunication
+add_library(guruxdlmsclient STATIC
+    GuruxDLMSClientExample/src/communication.cpp
+)
+
+target_include_directories(guruxdlmsclient PUBLIC
+    GuruxDLMSClientExample/include
+)
+
+target_link_libraries(guruxdlmsclient PUBLIC
+    guruxdlms
+)
+
